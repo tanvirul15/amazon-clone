@@ -1,13 +1,20 @@
 import React from "react";
+import { useStateValue } from "../../StateProvider";
 import "./CheckoutProduct.css";
 
 const CheckoutProduct = (props) => {
-  const { title, image, price, rating } = props.product;
-
+  const { id, title, image, price, rating } = props.product;
+  const [{ basket }, dispatch] = useStateValue();
   const ratingArray = [];
   for (let i = 0; i < rating; i++) {
     ratingArray.push("⭐");
   }
+  const removeFromBusket = () => {
+    dispatch({
+      type: "REMOVE_FROM_BASKET",
+      id: id,
+    });
+  };
 
   return (
     <div className='checkoutProduct'>
@@ -22,7 +29,7 @@ const CheckoutProduct = (props) => {
         <div className='checkoutProduct__rating'>
           <p>{ratingArray}</p>
         </div>
-        <button onClick={() => {}}>Remove from Basket</button>
+        <button onClick={removeFromBusket}>Remove from Basket</button>
       </div>
     </div>
   );
